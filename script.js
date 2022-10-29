@@ -20,11 +20,13 @@ const robotPlacement = {
 
 const warn = document.getElementById('warn');
 
+const robotPointer = document.createElement('div');
+robotPointer.innerHTML = '&#x2192';
+
 window.addEventListener('load', function () {
     const roomContainer = document.getElementById('room');
     room.forEach((row, index) => {
         const rows = document.createElement('div');
-        rows.id = `row${index + 1}`;
         rows.className = 'row';
         row.forEach(col => {
             const cols = document.createElement('div');
@@ -35,21 +37,17 @@ window.addEventListener('load', function () {
         roomContainer.appendChild(rows);
     });
     const col1 = document.getElementById('1col1');
-    col1.innerHTML = '&#x2192';
-    warn.className = 'hidden';
+    col1.appendChild(robotPointer);
 });
 
 const turnBtn = document.getElementById('turn');
 
 turnBtn.addEventListener('click', function () {
-    const { x, y } = robotPlacement;
-    const col1 = document.getElementById(`${x}col${y}`);
-    col1.classList.remove(`rotate-${robotPosition === 0 ? 360 : robotPosition}`);
     robotPosition += 90;
-    col1.classList.add(`rotate-${robotPosition}`);
     if (robotPosition === 360) {
         robotPosition = 0;
     }
+    robotPointer.className = `rotate-${robotPosition}`;
 });
 
 const moveBtn = document.getElementById('move');
@@ -87,7 +85,7 @@ moveBtn.addEventListener('click', function () {
         break;
     }
     const {x, y} = robotPlacement;
-    setRobot(prevRow, prevCol, x, y);
+    moveRobot(prevRow, prevCol, x, y);
 });
 
 const resetBtn = document.getElementById('reset');
@@ -97,15 +95,16 @@ resetBtn.addEventListener('click', function () {
     robotPlacement.x = 1;
     robotPlacement.y = 1;
     robotPosition = 0;
-    setRobot(x, y, 1, 1);
+    moveRobot(x, y, 1, 1);
 });
 
-function setRobot(prevRow, prevCol, newRow, newCol) {
+function moveRobot(prevRow, prevCol, newRow, newCol) {
     warn.className = 'hidden';
     const col1 = document.getElementById(`${prevRow}col${prevCol}`);
-    col1.innerHTML = '';
-    col1.classList.remove(`rotate-${robotPosition}`);
+    col1.removeChild(robotPointer);
+    col1.classList.remove('enlarge');
     const col2 = document.getElementById(`${newRow}col${newCol}`);
-    col2.innerHTML = '&#x2192';
-    col2.classList.add(`rotate-${robotPosition}`);
+    col2.appendChild(robotPointer);
+    col2.classList.add('enlarge');
+
 }

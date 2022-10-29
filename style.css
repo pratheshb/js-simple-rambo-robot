@@ -49,6 +49,10 @@ body {
     visibility: hidden;
 }
 
+.rotate-0 {
+    transform: rotate(0deg);
+}
+
 .rotate-90 {
     transform: rotate(90deg);
 }
@@ -59,10 +63,6 @@ body {
 
 .rotate-270 {
     transform: rotate(270deg);
-}
-
-.rotate-360 {
-    transform: rotate(360deg);
 }
 
 button {
@@ -80,4 +80,18 @@ button {
 
 .reset {
     background: transparent;
+}
+
+.enlarge {
+    animation: enlarge .2s;
+}
+
+@keyframes enlarge {
+    from {
+        transform: scale(.8);
+    }
+
+    to {
+        transform: scale(1);
+    }
 }
