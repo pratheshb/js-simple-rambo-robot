@@ -95,6 +95,7 @@ resetBtn.addEventListener('click', function () {
     robotPlacement.x = 1;
     robotPlacement.y = 1;
     robotPosition = 0;
+    robotPointer.className = `rotate-${robotPosition}`;
     moveRobot(x, y, 1, 1);
 });
 
